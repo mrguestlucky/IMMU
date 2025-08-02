@@ -590,7 +590,25 @@ case "autoread": {
     }
 }
 break;
-
+             
+case 's':
+case 'sticker': {
+  if (!m.quoted || !/image|video/.test(m.quoted.mtype)) return reply('📸 Reply to an image or short video to make sticker.');
+  reply('🛠 Making your sticker...');
+  try {
+    const media = await m.quoted.download();
+    const stickerBuffer = await writeExif(media, {
+      packname: "IMMU-MD",
+      author: "By Imad Ali"
+    });
+    await bot.sendMessage(m.chat, { sticker: stickerBuffer }, { quoted: m });
+  } catch (e) {
+    console.error(e);
+    reply('❌ Failed to create sticker.');
+  }
+  break;
+}
+             
 case "autotyping": {
     if (!isCreator) return reply("Only bot owner can use this command⚠️");
     if (!text) return reply('*Please specify on/off*\n\nExample: .autotyping on');
