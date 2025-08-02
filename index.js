@@ -16,6 +16,7 @@ const moment = require("moment-timezone")
 const readline = require("readline");
 
 const express = require('express');
+const { writeExif } = require('./lib/sticker');
 const app = express();
 const PORT = process.env.PORT || 6200
 
